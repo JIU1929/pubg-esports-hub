@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBGモバイルeスポーツハブ</title>
+    <script>
+        let isEditing = false;
+
+        function toggleEditMode() {
+            const modal = document.getElementById('password-modal');
+            modal.style.display = 'block';
+        }
+
+        function submitPassword() {
+            const passwordInput = document.getElementById('password-input');
+            const modal = document.getElementById('password-modal');
+            if (passwordInput.value === "admin123") {
+                isEditing = !isEditing;
+                document.body.classList.toggle("editing", isEditing);
+                alert(isEditing ? "編集モードが有効になりました。" : "編集モードが無効になりました。");
+
+                // Enable or disable contentEditable for editable areas
+                document.querySelectorAll(".editable").forEach(element => {
+                    element.contentEditable = isEditing;
+                });
+
+                // Show or hide save buttons
+                document.querySelectorAll(".save-button").forEach(button => {
+                    button.style.display = isEditing ? "inline-block" : "none";
+                });
+                modal.style.display = 'none';
+                passwordInput.value = "";
+            } else {
+                alert("パスワードが間違っています。");
+                passwordInput.value = "";
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('password-modal');
+            modal.style.display = 'none';
+        }
+
+        function saveContent(sectionId) {
+            const content = document.getElementById(sectionId).innerHTML;
+            alert(`保存された内容: ${content}`); // Replace with actual API call for saving data
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #1e1e2f;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+        }
+        header button {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            padding: 5px 10px;
+            background-color: #f4d03f;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        header button:hover {
+            background-color: #e2b93d;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #29293d;
+            padding: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            color: #f4d03f;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        .editable {
+            border: 1px dashed transparent;
+        }
+        .editing .editable {
+            border-color: #f4d03f;
+        }
+        .save-button {
+            display: none;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .save-button:hover {
+            background-color: #45a049;
+        }
+        .card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 15px;
+        }
+        .footer {
+            background-color: #1e1e2f;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .modal-content input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .modal-content button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal-content button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PUBGモバイルeスポーツハブ</h1>
+        <p>PUBGモバイルeスポーツの最新情報をお届けします！</p>
+        <button onclick="toggleEditMode()">編集モード切替</button>
+    </header>
+    <nav>
+        <a href="#news">ニュース</a>
+        <a href="#events">イベント</a>
+        <a href="#guides">ガイド</a>
+        <a href="#rankings">ランキング</a>
+        <a href="#transfers">移籍情報</a>
+    </nav>
+    <div class="container">
+        <section id="news" class="section">
+            <h2>最新ニュース</h2>
+            <div id="news-content" class="editable">
+                <div class="card">
+                    <img src="news1.jpg" alt="ニュース画像1">
+                    <div class="card-content">
+                        <h3>ニュース1</h3>
+                        <p>新シーズンが発表されました！</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="news2.jpg" alt="ニュース画像2">
+                    <div class="card-content">
+                        <h3>ニュース2</h3>
+                        <p>トップチームの成績が更新されました。</p>
+                    </div>
+                </div>
+            </div>
+            <button class="save-button" onclick="saveContent('news-content')">保存</button>
+        </section>
+        <section id="events" class="section">
+            <h2>イベント情報</h2>
+            <div id="events-content" class="editable">
+                <h3>今後のイベント</h3>
+                <div class="card">
+                    <img src="event1.jpg" alt="イベント画像1">
+                    <div class="card-content">
+                        <h3>スプリングフェスト2025</h3>
+                        <p>日程: 2025年3月1日 - 2025年3月10日</p>
+                        <p>場所: ソウルオリンピックスタジアム</p>
+                    </div>
+                </div>
+                <h3>開催中のイベント</h3>
+                <div class="card">
+                    <img src="event2.jpg" alt="イベント画像2">
+                    <div class="card-content">
+                        <h3>ウィンターカップ2025</h3>
+                        <p>日程: 2025年1月15日 - 2025年1月25日</p>
+                        <p>場所: 東京ビッグサイト</p>
+                    </div>
+                </div>
+                <h3>終了したイベント</h3>
+                <div class="card">
+                    <img src="event3.jpg" alt="イベント画像3">
+                    <div class="card-content">
+                        <h3>オータムトーナメント2024</h3>
+                        <p>日程: 2024年11月1日 - 2024年11月10日</p>
+                        <p>場所: 大阪ドーム</p>
+                    </div>
+                </div>
+            </div>
+            <button class="save-button" onclick="saveContent('events-content')">保存</button>
+        </section>
+        <section id="transfers" class="section">
+            <h2>選手移籍情報</h2>
+            <div id="transfers-content" class="editable">
+                <div class="card">
+                    <img src="transfer1.jpg" alt="移籍画像1">
+                    <div class="card-content">
+                        <h3>プレイヤーA</h3>
+                        <p>チームBに移籍しました。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="transfer2.jpg" alt="移籍画像2">
+                    <div class="card-content">
+                        <h3>プレイヤーX</h3>
+                        <p>新チームに加入しました。</p>
+                    </div>
+                </div>
+            </div>
+            <button class="save-button" onclick="saveContent('transfers-content')">保存</button>
+        </section>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 PUBGモバイルeスポーツハブ. 無断転載を禁じます。</p>
+    </footer>
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <h3>編集モードにアクセス</h3>
+            <input id="password-input" type="password" placeholder="パスワードを入力してください">
+            <button onclick="submitPassword()">送信</button>
+            <button onclick="closeModal()" style="background-color: #e74c3c; margin-left: 10px;">キャンセル</button>
+        </div>
+    </div>
+</body>
+</html>
